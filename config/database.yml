@@ -15,6 +15,10 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  username: tracker
+  password: M4r1o53
+  host: localhost
+  port: 5499
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -22,10 +26,7 @@ default: &default
 development:
   <<: *default
   database: twitch_tracker_development
-  username: root
-  password: mysecretpassword
-  host: localhost
-  port: 5432
+
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.

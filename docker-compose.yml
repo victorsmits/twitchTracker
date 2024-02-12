@@ -1,0 +1,80 @@
+version: '3.6'
+
+services:
+  tracker_pg:
+    image: postgres:alpine
+    container_name: tracker_pg
+    restart: always
+    ports:
+      - "5499:5432"
+    networks:
+      - tracker_network
+    volumes:
+      - tracker_pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: tracker
+      POSTGRES_PASSWORD: M4r1o53
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+
+  tracker_redis:
+    image: redis:6.0
+    container_name: tracker_redis
+    restart: always
+    ports:
+      - "6399:6379"
+    networks:
+      - tracker_network
+    volumes:
+      - tracker_redis_data:/data
+
+  tracker_app:
+    build:
+      context: .
+      target: tracker-app-dev
+      dockerfile: dev.Dockerfile
+      args:
+        - rails_env=development
+    image: tracker/app_dev
+    container_name: tracker_app
+    environment:
+      RAILS_ENV: development
+      REDISCLOUD_URL: redis://tracker_redis:6379
+      db_host: tracker_pg
+    volumes:
+      - .:/app
+      - bundler_gems:/usr/local/bundle
+    command: bundle exec rails s -p 3666 -b 0.0.0.0
+    networks:
+      - tracker_network
+    depends_on:
+      - tracker_pg
+      - tracker_redis
+    ports:
+      - "3000:3666"
+    stdin_open: true
+    tty: true
+
+  counter_sidekiq:
+    image: tracker/app_dev
+    container_name: tracker_sidekiq
+    environment:
+      RAILS_ENV: development
+      REDISCLOUD_URL: redis://tracker_redis:6379
+      db_host: tracker_pg
+    volumes:
+      - .:/app
+      - bundler_gems:/usr/local/bundle
+    command: sidekiq -c 2 -q high -q default
+    depends_on:
+      - tracker_pg
+      - tracker_redis
+    stdin_open: true
+    tty: true
+
+volumes:
+  tracker_pg_data:
+  tracker_redis_data:
+  bundler_gems:
+networks:
+  tracker_network:
+    external: true
