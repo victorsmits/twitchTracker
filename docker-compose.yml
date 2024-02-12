@@ -30,7 +30,6 @@ services:
   tracker_app:
     build:
       context: .
-      target: tracker-app-dev
       dockerfile: dev.Dockerfile
       args:
         - rails_env=development
