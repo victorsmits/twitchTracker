@@ -1,0 +1,6 @@
+# Default is 10 000 but as we use this for monitoring and retry,
+# it's critical we don't loose jobs. So adding a pretty high max
+# The risk is filling up the Redis, but the Redis is automatically
+# scaling up. So we'd need to go higher than the higher plan on RedisCloud
+# for this to happen.
+:dead_max_jobs: 1_000_000

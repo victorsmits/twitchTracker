@@ -17,7 +17,7 @@ services:
       POSTGRES_HOST_AUTH_METHOD: "trust"
 
   tracker_redis:
-    image: redis:6.0
+    image: redis:alpine
     container_name: tracker_redis
     restart: always
     ports:
@@ -37,7 +37,7 @@ services:
     container_name: tracker_app
     environment:
       RAILS_ENV: development
-      REDISCLOUD_URL: redis://tracker_redis:6379
+      redis_url: redis://tracker_redis:6379
       pg_host: tracker_pg
     volumes:
       - .:/app
@@ -53,12 +53,14 @@ services:
     stdin_open: true
     tty: true
 
-  counter_sidekiq:
+  tracker_sidekiq:
     image: tracker/app_dev
     container_name: tracker_sidekiq
+    networks:
+      - tracker_network
     environment:
       RAILS_ENV: development
-      REDISCLOUD_URL: redis://tracker_redis:6379
+      redis_url: redis://tracker_redis:6379
       db_host: tracker_pg
     volumes:
       - .:/app
