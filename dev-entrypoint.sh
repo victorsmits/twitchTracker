@@ -5,7 +5,7 @@ set -e
 echo "Running environment: $RAILS_ENV"
 
 # gem install bundler:2.2.27
-# bundle check || bundle install
+ bundle check || bundle install
 
 # Remove pre-existing puma/passenger server.pid
 [ -f /app/tmp/pids/server.pid ] && rm -f /app/tmp/pids/server.pid
