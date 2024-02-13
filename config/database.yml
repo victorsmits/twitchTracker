@@ -15,10 +15,10 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: tracker
-  password: M4r1o53
-  host: localhost
-  port: 5499
+  username: <%= Figaro.env.pg_user %>
+  password: <%= Figaro.env.pg_password %>
+  host: <%= Figaro.env.pg_host %>
+  port: <%= Figaro.env.pg_port %>
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
