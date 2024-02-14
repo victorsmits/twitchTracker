@@ -49,6 +49,7 @@ steps:
   - name: build docker
     image: plugins/docker
     settings:
+      dockerfile: .drone/Dockerfile
       repo: registry.victorsmits.com/twitchtracker/app
       registry: registry.victorsmits.com
       tags: latest
