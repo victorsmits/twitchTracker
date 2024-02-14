@@ -26,7 +26,7 @@ steps:
       mount:
         - ./bundle
     commands:
-      - bundle config set path './bundle
+      - bundle config set path './bundle'
       - bundle config set without 'development'
       - bundle install
 
