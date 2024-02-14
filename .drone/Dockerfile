@@ -10,7 +10,7 @@ WORKDIR /rails
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_PATH="./bundle" \
     BUNDLE_WITHOUT="development"
 
 
@@ -33,12 +33,6 @@ RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc\
     apt-get install -q -y --no-install-recommends \
     postgresql-client-13 libpq-dev && \
     rm -rf /var/lib/apt/lists/*
-
-# Install application gems
-COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
 
 # Copy application code
 COPY . .
