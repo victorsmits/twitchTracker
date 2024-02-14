@@ -47,8 +47,6 @@ RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc\
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
-COPY .drone/rod-entrypoint.sh prod-entrypoint.sh
-
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails db storage tmp
