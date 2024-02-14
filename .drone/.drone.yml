@@ -20,7 +20,7 @@ steps:
       root: s3cache
       restore: true
 
-  - name: test
+  - name: bundle install
     image: ruby:3.2.3
     settings:
       mount:
@@ -50,10 +50,10 @@ steps:
     image: plugins/docker
     settings:
       dockerfile: prod.Dockerfile
-      repo: registry.victorsmits.com/TwitchTracker/app
+      repo: registry.victorsmits.com/twitchtracker/app
       registry: registry.victorsmits.com
       tags: latest
-      cache_from: registry.victorsmits.com/TwitchTracker/app
+      cache_from: registry.victorsmits.com/twitchtracker/app
       username:
         from_secret: docker_username
       password:
