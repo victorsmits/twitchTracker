@@ -1,0 +1,18 @@
+docker_images:
+  - registry.alexclick.tv/click-game/web
+
+# docker_hub_images:
+#   -
+
+tag: latest
+
+# volumes:
+#   -
+
+networks:
+  - internal
+  - click-game
+
+folder: click-game-web
+
+container: click-game-web

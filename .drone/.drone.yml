@@ -1,0 +1,60 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+trigger:
+  branch:
+    - main
+  event:
+    - push
+
+steps:
+  - name: restore
+    image: plugins/s3-cache
+    settings:
+      pull: true
+      endpoint: https://minio.victorsmits.com
+      access_key:
+        from_secret: s3_access_key
+      secret_key:
+        from_secret: s3_secret_key
+      root: s3cache
+      restore: true
+
+  - name: test
+    image: ruby:3.2.3
+    settings:
+      mount:
+        - ./bundle
+    commands:
+      - bundle install --path ./bundle --without development
+
+  - name: rebuild
+    image: plugins/s3-cache
+    settings:
+      pull: true
+      endpoint: https://minio.victorsmits.com
+      access_key:
+        from_secret: s3_access_key
+      secret_key:
+        from_secret: s3_secret_key
+      rebuild: true
+      root: s3cache
+      mount:
+        - ./bundle
+      when:
+        event: push
+
+  - name: build docker
+    image: plugins/docker
+    settings:
+      dockerfile: prod.Dockerfile
+      repo: registry.victorsmits.com/TwitchTracker/app
+      registry: registry.victorsmits.com
+      tags: latest
+      cache_from: registry.victorsmits.com/TwitchTracker/app
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
