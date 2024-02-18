@@ -1,5 +1,5 @@
 require 'net/http'
-require 'sidekiq-scheduler'
+require 'rest-client'
 
 class SullyHistoryJob
   include Sidekiq::Job
@@ -11,18 +11,9 @@ class SullyHistoryJob
   REQUEST_PARAMS = { 'user-agent' => USER_AGENT }
 
   def perform(user)
-    uri = URI("https://sullygnome.com/api/tables/channeltables/streams/365/#{user}/%20/1/1/desc/0/100")
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-
-    request = Net::HTTP::Get.new(uri.path)
-    response = http.request(request)
-
-    raise "Failed to fetch posts: #{response.body}" unless response.code == '200'
-
-    posts = JSON.parse(response.body)
-    return posts
-  rescue StandardError => e
-    puts "Error: #{e.message}"
+    url = "https://sullygnome.com/api/tables/channeltables/streams/365/#{user}/%20/1/1/desc/0/100"
+    response = RestClient.get(url, REQUEST_PARAMS)
+    p response.code
+    p response.body
   end
 end
