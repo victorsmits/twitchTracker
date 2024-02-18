@@ -11,7 +11,7 @@
   - history
   - high_priority
   - default
-  - low_priority
+  - low
 
 production:
   :concurrency: 25

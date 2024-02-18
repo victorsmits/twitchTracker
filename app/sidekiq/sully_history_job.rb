@@ -1,4 +1,5 @@
 require 'net/http'
+require 'sidekiq-scheduler'
 
 class SullyHistoryJob
   include Sidekiq::Job
