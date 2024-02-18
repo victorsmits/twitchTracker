@@ -65,7 +65,7 @@ services:
     volumes:
       - .:/app
       - bundler_gems:/usr/local/bundle
-    command: sidekiq -c 2 -q high -q default
+    command: sidekiq -c 2
     depends_on:
       - tracker_pg
       - tracker_redis
