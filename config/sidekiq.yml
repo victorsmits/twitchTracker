@@ -4,3 +4,14 @@
 # scaling up. So we'd need to go higher than the higher plan on RedisCloud
 # for this to happen.
 :dead_max_jobs: 1_000_000
+:concurrency: 10
+:timeout: 25
+:queues:
+  - realtime
+  - history
+  - high_priority
+  - default
+  - low
+
+production:
+  :concurrency: 25

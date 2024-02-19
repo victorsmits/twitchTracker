@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_19_114039) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_19_204508) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,13 +49,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_19_114039) do
 
   create_table "streams", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "twitch_stream_id"
+    t.bigint "twitch_stream_id"
     t.integer "max_viewer_count"
     t.datetime "started_at", precision: nil
     t.string "language"
     t.string "thumbnail_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "ended_at"
     t.index ["user_id"], name: "index_streams_on_user_id"
   end
 
@@ -64,6 +65,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_19_114039) do
     t.string "twitch_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sully_streamer_id"
   end
 
   add_foreign_key "stream_logs", "streams"

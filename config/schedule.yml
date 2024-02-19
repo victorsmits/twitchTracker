@@ -1,0 +1,8 @@
+# sidekiq_scheduler.yml
+
+update_history:
+  every: '30sec'
+  class: SullyHistoryJob
+  queue: low
+  args: 154700
+  enabled: false
