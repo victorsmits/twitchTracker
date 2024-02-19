@@ -14,7 +14,6 @@ class SullyHistoryJob
     id = sully_streamer_id user
     return unless id
     streams = get_all_streams id
-    debugger
     user = process_user(user, id)
     process_streams(user, streams)
   end
