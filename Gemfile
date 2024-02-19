@@ -55,3 +55,5 @@ gem "sidekiq-scheduler", "~> 5.0"
 gem "rest-client", "~> 2.1"
 
 gem 'awesome_print', :require => 'ap'
+
+gem "httparty", "~> 0.21.0"

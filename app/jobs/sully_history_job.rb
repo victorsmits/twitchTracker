@@ -11,7 +11,9 @@ class SullyHistoryJob
   REQUEST_PARAMS = { 'user-agent' => USER_AGENT }
 
   def perform(user)
-    url = "https://sullygnome.com/api/tables/channeltables/streams/365/#{user}/%20/1/1/desc/0/1"
+    id = sully_streamer_id user
+    return unless id
+    url = "https://sullygnome.com/api/tables/channeltables/streams/365/#{id}/%20/1/1/desc/0/1"
     response = RestClient.get(url, REQUEST_PARAMS)
     data = JSON.parse(response.body)['data']
     user = process_user(data)
@@ -41,6 +43,14 @@ class SullyHistoryJob
 
   def stream_present?(stream_id)
     Stream.find_by(twitch_stream_id: stream_id).present?
+  end
+
+  def sully_streamer_id(user)
+    fetcher = JavascriptValueFetcher.new(user)
+    raw_page_info = fetcher.fetch_value('PageInfo')
+    return unless raw_page_info
+    page_info = JSON.parse(raw_page_info)
+    page_info['id'] if page_info
   end
 
 end
