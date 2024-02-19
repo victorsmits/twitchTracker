@@ -75,6 +75,7 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
+    awesome_print (1.9.2)
     base64 (0.2.0)
     bigdecimal (3.1.6)
     bootsnap (1.18.3)
@@ -243,6 +244,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  awesome_print
   bootsnap
   debug
   figaro
