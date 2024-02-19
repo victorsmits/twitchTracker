@@ -1,4 +1,3 @@
-# app/services/javascript_value_fetcher.rb
 require 'httparty'
 
 class JavascriptValueFetcher
