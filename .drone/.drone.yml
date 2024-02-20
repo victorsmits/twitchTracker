@@ -1,5 +1,19 @@
 
+
+
+
+---
+kind: pipeline
+type: docker
+name: default
+
+trigger:
+  event:
+    - push
+
 x-common-steps: &common-steps
+
+steps:
   - name: restore
     image: plugins/s3-cache
     settings:
@@ -38,18 +52,6 @@ x-common-steps: &common-steps
       when:
         event: push
 
-
----
-kind: pipeline
-type: docker
-name: default
-
-trigger:
-  event:
-    - push
-
-steps:
-  *common-steps
   - name: build docker
     image: plugins/docker
     settings:
