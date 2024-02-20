@@ -50,6 +50,11 @@ steps:
 
   - name: build docker
     image: plugins/docker
+    when:
+      target:
+        - build
+      event:
+        - promote
     settings:
       dockerfile: .drone/Dockerfile
       repo: registry.victorsmits.com/twitchtracker/app
@@ -84,9 +89,9 @@ steps:
       REGISTRY_PASS:
         from_secret: docker_password
     settings:
-      playbook: ../.ansible/deploy.yml
-      inventory: ../.ansible/production.conf
-      galaxy: ../.ansible/requirement.yml
+      playbook: .ansible/deploy.yml
+      inventory: .ansible/production.conf
+      galaxy: .ansible/requirement.yml
       user: appli
       private_key:
         from_secret: ansible_private_key
