@@ -8,10 +8,10 @@ type: docker
 name: default
 
 trigger:
+  branch:
+    - main
   event:
     - push
-
-x-common-steps: &common-steps
 
 steps:
   - name: restore
