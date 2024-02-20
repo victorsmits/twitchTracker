@@ -92,6 +92,6 @@ steps:
       playbook: .ansible/deploy.yml
       inventory: .ansible/production.conf
       galaxy: .ansible/requirement.yml
-      user: appli
+      user: agent
       private_key:
         from_secret: ansible_private_key
