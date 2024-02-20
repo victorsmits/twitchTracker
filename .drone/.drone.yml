@@ -1,13 +1,5 @@
----
-kind: pipeline
-type: docker
-name: default
 
-trigger:
-  event:
-    - push
-
-steps:
+x-common-steps: &common-steps
   - name: restore
     image: plugins/s3-cache
     settings:
@@ -46,6 +38,18 @@ steps:
       when:
         event: push
 
+
+---
+kind: pipeline
+type: docker
+name: default
+
+trigger:
+  event:
+    - push
+
+steps:
+  *common-steps
   - name: build docker
     image: plugins/docker
     settings:
@@ -82,8 +86,9 @@ steps:
       REGISTRY_PASS:
         from_secret: docker_password
     settings:
-      playbook: .ansible/deploy.yml
-      inventory: .ansible/production.conf
+      playbook: ../.ansible/deploy.yml
+      inventory: ../.ansible/production.conf
+      galaxy: ../.ansible/requirement.yml
       user: appli
       private_key:
         from_secret: ansible_private_key
