@@ -58,3 +58,32 @@ steps:
         from_secret: docker_username
       password:
         from_secret: docker_password
+
+
+---
+kind: pipeline
+type: docker
+name: deploy
+
+trigger:
+  event:
+    - promote
+  target:
+    - production
+
+steps:
+  - name: run ansible playbook production
+    image: plugins/ansible
+    environment:
+      REGISTRY_URL:
+        from_secret: docker_url
+      REGISTRY_USER:
+        from_secret: docker_username
+      REGISTRY_PASS:
+        from_secret: docker_password
+    settings:
+      playbook: .ansible/deploy.yml
+      inventory: .ansible/production.conf
+      user: appli
+      private_key:
+        from_secret: ansible_private_key
