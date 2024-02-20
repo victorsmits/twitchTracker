@@ -4,13 +4,10 @@ type: docker
 name: default
 
 trigger:
-  target:
-    - build
   branch:
     - main
   event:
     - push
-    - promote
 
 steps:
   - name: restore
