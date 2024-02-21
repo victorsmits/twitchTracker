@@ -57,3 +57,9 @@ gem "rest-client", "~> 2.1"
 gem 'awesome_print', :require => 'ap'
 
 gem "httparty", "~> 0.21.0"
+
+gem "faraday", "~> 2.9"
+
+gem "faraday-parse_dates", "~> 0.1.1"
+
+gem "faraday-retry", "~> 2.2"
