@@ -8,7 +8,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v3
       - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2
+        uses: arillso/action.playbook@master
         env:
           REGISTRY_URL: registry.victorsmits.com
           REGISTRY_USER: ${{ secrets.DOCKER_USERNAME }}
@@ -16,5 +16,5 @@ jobs:
         with:
           playbook: .ansible/deploy.yml
           inventory: .ansible/production.conf
-          key: ${{secrets.SSH_PRIVATE_KEY}}
+          private_key: ${{secrets.SSH_PRIVATE_KEY}}
           requirements: .ansible/requirement.yml

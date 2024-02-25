@@ -7,7 +7,7 @@ trigger:
   branch:
     - main
   event:
-    - push
+    - merge
 
 steps:
   - name: restore
