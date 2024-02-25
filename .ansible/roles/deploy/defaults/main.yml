@@ -13,3 +13,5 @@ networks:
   - internal
 
 folder: twitchtracker
+
+container: tracker_app
