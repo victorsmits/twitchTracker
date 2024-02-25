@@ -12,7 +12,6 @@
       - 'python3-pip'
     state: 'present'
     update_cache: yes
-  become: yes
 
 - name: Install pip docker package for docker ansible api
   pip:
