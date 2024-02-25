@@ -1,5 +1,3 @@
 - hosts: production
-  vars:
-    branch: "{{ lookup('env', 'DRONE_BRANCH') }}"
   roles:
     - deploy

@@ -15,7 +15,7 @@ jobs:
           REGISTRY_PASS: ${{ secrets.DOCKER_PASSWORD }}
         with:
           playbook: .ansible/deploy.yml
-          inventory: .ansible/production.conf
+          inventory: .ansible/production
           private_key: ${{secrets.SSH_PRIVATE_KEY}}
           galaxy_file: .ansible/requirement.yml
           user: agent

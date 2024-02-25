@@ -1,5 +1,5 @@
 docker_images:
-  - registry.alexclick.tv/click-game/web
+  - registry.victorsmits.com/twitchtracker/app
 
 # docker_hub_images:
 #   -
@@ -11,8 +11,7 @@ tag: latest
 
 networks:
   - internal
-  - click-game
 
-folder: click-game-web
+folder: twitchtracker
 
-container: click-game-web
+container: twitchtracker
