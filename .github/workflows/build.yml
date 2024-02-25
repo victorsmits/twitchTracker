@@ -23,6 +23,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: twitchtracker/app:latest
-          cache-from: type=registry,ref=twitchtracker/app:buildcache
-          cache-to: type=registry,ref=twitchtracker/app:buildcache,mode=max
+          tags: registry.victorsmits.com/twitchtracker/app:latest
+          cache-from: type=registry,ref=registry.victorsmits.com/twitchtracker/app:buildcache
+          cache-to: type=registry,ref=registry.victorsmits.com/twitchtracker/app:buildcache,mode=max
