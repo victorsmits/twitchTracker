@@ -31,27 +31,16 @@ RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc\
     postgresql-client-13 libpq-dev && \
     rm -rf /var/lib/apt/lists/*
 
-
-# Throw-away build stage to reduce size of final image
-FROM base as build
-
 # Copy application code
 COPY . .
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-
-# Final stage for app image
-FROM base
-
-# Copy built artifacts: gems, application
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails /rails
-
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails db storage tmp
+
 USER rails:rails
 
 ENTRYPOINT ["./prod-entrypoint.sh"]
