@@ -38,8 +38,6 @@ COPY Gemfile* ./
 # Precompile bootsnap code for faster boot times
 RUN bundle install --jobs=3 --retry=3
 
-COPY --from=depedencies $GEM_HOME $GEM_HOME
-
 # Copy application code
 COPY . .
 
