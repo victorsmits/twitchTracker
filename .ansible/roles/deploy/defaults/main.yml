@@ -13,5 +13,3 @@ networks:
   - internal
 
 folder: twitchtracker
-
-container: twitchtracker
