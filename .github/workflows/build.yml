@@ -8,37 +8,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Restore gem cache
-        uses: tespkg/actions-cache/restore@v1
-        with:
-          endpoint: "minio.victorsmits.com" # optional, default s3.amazonaws.com
-          accessKey: ${{ secrets.MINIO_ACCESS_KEY }}
-          secretKey: ${{ secrets.MINIO_SECRET_KEY }}
-          bucket: "s3cache" # required
-          key: ${{ github.repository }}/${{ github.ref }}
-          path: |
-            Gemfile
-            Gemfile.lock
-            ./bundle
-
-      - name: Setup Ruby
-        env:
-          BUNDLE_PATH: ./bundle
-        uses: ruby/setup-ruby@v1
-
-      - name: Store gem cache
-        uses: tespkg/actions-cache/save@v1
-        with:
-          endpoint: "minio.victorsmits.com"
-          accessKey: ${{ secrets.MINIO_ACCESS_KEY }}
-          secretKey: ${{ secrets.MINIO_SECRET_KEY }}
-          bucket: "s3cache" # required
-          key: ${{ github.repository }}/${{ github.ref }}
-          path: |
-            Gemfile
-            Gemfile.lock
-            ./bundle
-
       - uses: whoan/docker-build-with-cache-action@v5
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
