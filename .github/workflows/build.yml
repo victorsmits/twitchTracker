@@ -21,6 +21,16 @@ jobs:
             Gemfile.lock
             $PWD/vendor/bundle
 
+      - name: install package
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: |
+            --no-install-recommends --fix-missing \
+            ghostscript curl libgmp-dev nodejs wget locales less \
+            build-essential git ca-certificates sudo ca-certificates \
+            gnupg2 software-properties-common apt-transport-https lsb-release \
+            postgresql-client-13 libpq-dev
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
