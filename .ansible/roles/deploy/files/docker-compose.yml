@@ -1,0 +1,68 @@
+version: '3.6'
+
+services:
+  tracker_pg:
+    image: postgres:alpine
+    container_name: tracker_pg
+    restart: always
+    ports:
+      - "5500:5432"
+    networks:
+      - tracker_network
+    volumes:
+      - tracker_pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: tracker
+      POSTGRES_PASSWORD: M4r1o53
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+
+  tracker_redis:
+    image: redis:alpine
+    container_name: tracker_redis
+    restart: always
+    ports:
+      - "6400:6379"
+    networks:
+      - tracker_network
+    volumes:
+      - tracker_redis_data:/data
+
+  tracker_app:
+    image: registry.victorsmits.com/twitchtracker/app:latest
+    container_name: tracker_app
+    environment:
+      redis_url: redis://tracker_redis:6379
+      pg_host: tracker_pg
+    command: bundle exec rails s -p 3666 -b 0.0.0.0
+    networks:
+      - tracker_network
+    depends_on:
+      - tracker_pg
+      - tracker_redis
+    ports:
+      - "3001:3666"
+    stdin_open: true
+    tty: true
+
+  tracker_sidekiq:
+    image: registry.victorsmits.com/twitchtracker/app:latest
+    container_name: tracker_sidekiq
+    networks:
+      - tracker_network
+    environment:
+      redis_url: redis://tracker_redis:6379
+      db_host: tracker_pg
+    command: sidekiq -c 2
+    depends_on:
+      - tracker_pg
+      - tracker_redis
+    stdin_open: true
+    tty: true
+
+volumes:
+  tracker_pg_data:
+  tracker_redis_data:
+  bundler_gems:
+networks:
+  tracker_network:
+    external: true
