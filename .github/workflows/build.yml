@@ -19,7 +19,7 @@ jobs:
           path: |
             Gemfile
             Gemfile.lock
-            ./bundle
+            vendor/bundle
 
       - uses: ruby/setup-ruby@v1
 
@@ -27,7 +27,7 @@ jobs:
         env:
           RAILS_ENV: test
         run: |
-          bundle config path ./bundle
+          bundle config path vendor/bundle
           bundle config set without 'development'
           bundle install --jobs 4 --retry 3
 
@@ -42,7 +42,7 @@ jobs:
           path: |
             Gemfile
             Gemfile.lock
-            ./bundle
+            vendor/bundle
 
       - name: Log in to registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
