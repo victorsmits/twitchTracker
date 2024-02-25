@@ -15,7 +15,7 @@ jobs:
           REGISTRY_PASS: ${{ secrets.DOCKER_PASSWORD }}
         with:
           playbook: .ansible/deploy.yml
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           requirements: .ansible/requirement.yml
           options: |
             --inventory .ansible/production
