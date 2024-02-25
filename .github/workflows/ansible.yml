@@ -18,3 +18,4 @@ jobs:
           inventory: .ansible/production.conf
           private_key: ${{secrets.SSH_PRIVATE_KEY}}
           galaxy_file: .ansible/requirement.yml
+          user: agent
