@@ -10,7 +10,7 @@ jobs:
 
       - name: Restore yarn cache
         id: cache
-        uses: whalemare/minio-cache
+        uses: ProxyQB/minio-cache@v1.1.16
         with:
           endpoint: "minio.victorsmits.com" # optional, default s3.amazonaws.com
           port: 9000 # minio port
