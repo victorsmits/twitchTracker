@@ -30,17 +30,13 @@ RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc\
     rm -rf /var/lib/apt/lists/*
 
 # Throw-away build stage to reduce size of final image
-FROM base as depedencies
+FROM base as build
 
 # Copy application code
 COPY Gemfile* ./
 
 # Precompile bootsnap code for faster boot times
 RUN bundle install --jobs=3 --retry=3
-
-
-# Throw-away build stage to reduce size of final image
-FROM base as build
 
 COPY --from=depedencies $GEM_HOME $GEM_HOME
 
@@ -50,12 +46,11 @@ COPY . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-
 # Final stage for app image
 FROM base
 
 # Copy built artifacts: gems, application
-COPY --from=depedencies $GEM_HOME $GEM_HOME
+COPY --from=build $GEM_HOME $GEM_HOME
 COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
