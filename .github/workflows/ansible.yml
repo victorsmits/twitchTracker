@@ -15,34 +15,7 @@ jobs:
           REGISTRY_PASS: ${{ secrets.DOCKER_PASSWORD }}
         with:
           playbook: .ansible/deploy.yml
-          key: |
-            -----BEGIN OPENSSH PRIVATE KEY-----
-            b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn
-            NhAAAAAwEAAQAAAQEAsRLJoB7e3xarvcBMp0CaVdkH5foOcGCNzBD+E8geciVvXILWXFB9
-            wUuJFmLkC2h4EI1cuqK0oFXIAHN5UhCNdqPqkhhkH2TVgtnARIeCj+odlIjkiLYe7IbGP5
-            dhrG92Fhv6lx2y/5sGX1mBjuPzCbtdZNRVsnNUrOOanAoLvD/t+9szZDmMoIdAik2u7EOT
-            m/iFgKo1W8zUXVIiiTWSy6HwXo7Nt1eDTuG/SAgc6je2tPJg+lAeWDZZGJuPjsVpp1Um7j
-            JN5+XLnk+e7+4dpNwPOHZp63TGPkCLslFNujGR94yXoGdovopFByuh01xagsMZCp7WTGfS
-            nkbNRB3SSQAAA8j7YaSU+2GklAAAAAdzc2gtcnNhAAABAQCxEsmgHt7fFqu9wEynQJpV2Q
-            fl+g5wYI3MEP4TyB5yJW9cgtZcUH3BS4kWYuQLaHgQjVy6orSgVcgAc3lSEI12o+qSGGQf
-            ZNWC2cBEh4KP6h2UiOSIth7shsY/l2Gsb3YWG/qXHbL/mwZfWYGO4/MJu11k1FWyc1Ss45
-            qcCgu8P+372zNkOYygh0CKTa7sQ5Ob+IWAqjVbzNRdUiKJNZLLofBejs23V4NO4b9ICBzq
-            N7a08mD6UB5YNlkYm4+OxWmnVSbuMk3n5cueT57v7h2k3A84dmnrdMY+QIuyUU26MZH3jJ
-            egZ2i+ikUHK6HTXFqCwxkKntZMZ9KeRs1EHdJJAAAAAwEAAQAAAQEAhNR9H3pI4bzV9C+u
-            0MArhj6aKDBeaHplpDETB6/U9veSBCm5t+JBk6CgI4TnYI9rka8ZYn/vU19F+uCkn6T/GY
-            J40kMtyEcRy2ihTEcC8AZFTkkqdkt4AyJO0SE0CfBK+ubeIkILJqcaLqisAY6JoEFHG/4U
-            kxrk6BSMxITcrMdfRw8nZ23/+BXaHsLCripayimiD4P/whff06rOFfjbpxTsywVN2uYLf9
-            U+hC4eVgvNwfq+KLOrVws6ov6TJSZWo2qNPTbiA55kFFrxG+sthCsktKPxJDtd1QPWvS6w
-            z8QU3cwL51FrsUrX0M2jEiuevA3x4hSGip6GJ0jqgKRCyQAAAIB3gmlaycV5f5kNKkDHRR
-            urb7uTKoqkYjpnCCw8h11KVZS4+D5RUMVhv4lzXRkdtel12/zhilbWiOX/C0mzFx7zdPe/
-            RwbnwRkMvRgB18hqIGBgG4nw0Hn4vVR6dfGMkwPn7yA2MNN2NlL80WC4MiKaiXyzoU7+9E
-            8PJSGrfUVgNwAAAIEA6o4YWu7sng991wEGzc1Da+keVuzf9WyTs+AA9P1q0v9wtK8ksutJ
-            N31qq5XgYfdqTU6yHh9R7uw7Q6SEzWuswUmBBmt7lIVmDuEDzmcF4hSAXbp0pjy31xP90/
-            m91N+FtxCoAuWj5mXwdWLnmJJUbzSkq+mEiGD9chRqSmgLmMcAAACBAMFDTHtWtKdMoov0
-            ACWM3mLZv5eqHlcwjjbUw8foDK+HyVvtzrm4124lLGR0DMj/Lz87ZyilGTif4knWZVsw00
-            xC8/ClhL+u1eNSSrFOuDbReha+WuH/mAuq7x8R1OrJdjovbOtcbqgVrz+25nZLm8e7EoMq
-            lplIoW9Orirj6MxvAAAAC2FnZW50QGFwcGxpAQIDBAUGBw==
-            -----END OPENSSH PRIVATE KEY-----
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           requirements: .ansible/requirement.yml
           options: |
             --inventory .ansible/production
