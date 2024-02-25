@@ -4,14 +4,15 @@ on: workflow_dispatch
 jobs:
   ansible:
     runs-on: self-hosted
-     - name: Run playbook
-     uses: dawidd6/action-ansible-playbook@v2
-     env:
-       REGISTRY_URL: registry.victorsmits.com
-       REGISTRY_USER: ${{ secrets.DOCKER_USERNAME }}
-       REGISTRY_PASS: ${{ secrets.DOCKER_PASSWORD }}
-     with:
-       playbook: .ansible/deploy.yml
-       inventory: .ansible/production.conf
-       key: ${{secrets.SSH_PRIVATE_KEY}}
-       requirements: .ansible/requirement.yml
+    steps:
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        env:
+          REGISTRY_URL: registry.victorsmits.com
+          REGISTRY_USER: ${{ secrets.DOCKER_USERNAME }}
+          REGISTRY_PASS: ${{ secrets.DOCKER_PASSWORD }}
+        with:
+          playbook: .ansible/deploy.yml
+          inventory: .ansible/production.conf
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          requirements: .ansible/requirement.yml
