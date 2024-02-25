@@ -21,9 +21,10 @@ jobs:
             Gemfile.lock
             $PWD/vendor/bundle
 
-      - name: Install Ruby and gems
+      - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: 3.2.3
           bundler-cache: true
 
       - name: Store gem cache
