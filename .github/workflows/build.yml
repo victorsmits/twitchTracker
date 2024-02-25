@@ -22,8 +22,6 @@ jobs:
             ./bundle
 
       - uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
 
       - name: Bundle install
         env:
