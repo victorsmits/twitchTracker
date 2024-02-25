@@ -11,6 +11,7 @@ tag: latest
 
 networks:
   - internal
+  - tracker_network
 
 folder: twitchtracker
 
