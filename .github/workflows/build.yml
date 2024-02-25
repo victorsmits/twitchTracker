@@ -1,6 +1,6 @@
 name: Build docker image
 
-on: push
+on: merge
 jobs:
   build:
     runs-on: self-hosted
