@@ -13,7 +13,6 @@
     state: 'present'
     update_cache: yes
   become: yes
-  become_user: "root"
 
 - name: Install pip docker package for docker ansible api
   pip:
