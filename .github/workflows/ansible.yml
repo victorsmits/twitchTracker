@@ -8,15 +8,14 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v3
       - name: Run playbook
-        uses: arillso/action.playbook@master
+        uses: dawidd6/action-ansible-playbook@v2
         env:
           REGISTRY_URL: registry.victorsmits.com
           REGISTRY_USER: ${{ secrets.DOCKER_USERNAME }}
           REGISTRY_PASS: ${{ secrets.DOCKER_PASSWORD }}
         with:
           playbook: .ansible/deploy.yml
-          inventory: .ansible/production
-          private_key: |
+          key: |
             -----BEGIN OPENSSH PRIVATE KEY-----
             b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn
             NhAAAAAwEAAQAAAQEAsRLJoB7e3xarvcBMp0CaVdkH5foOcGCNzBD+E8geciVvXILWXFB9
@@ -44,6 +43,9 @@ jobs:
             xC8/ClhL+u1eNSSrFOuDbReha+WuH/mAuq7x8R1OrJdjovbOtcbqgVrz+25nZLm8e7EoMq
             lplIoW9Orirj6MxvAAAAC2FnZW50QGFwcGxpAQIDBAUGBw==
             -----END OPENSSH PRIVATE KEY-----
-          galaxy_file: .ansible/requirement.yml
-          user: agent
+          requirements: .ansible/requirement.yml
+          options: |
+            --inventory .ansible/production
+            --user agent
+            --verbose
           verbose: 4
