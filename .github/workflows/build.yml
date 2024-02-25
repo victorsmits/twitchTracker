@@ -20,12 +20,17 @@ jobs:
             Gemfile
             Gemfile.lock
             $PWD/vendor/bundle
+            
+      - uses: masa-iwasaki/setup-rbenv@v1
+      - name: Install Ruby
+        run: |
+          eval "$(rbenv init -)"
+          rbenv install -s `cat .ruby-version` # or specify the version you want
 
-      - name: Install Ruby and gems
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-          self-hosted: true
+      - name: Run bundler
+        run: |
+          eval "$(rbenv init -)"
+          bundle install --path vendor/bundle
 
       - name: Store gem cache
         uses: tespkg/actions-cache/save@v1
