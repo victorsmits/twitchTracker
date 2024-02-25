@@ -19,10 +19,12 @@ jobs:
           path: |
             Gemfile
             Gemfile.lock
-            ~/vendor/bundle
+            $PWD/vendor/bundle
 
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
+        with:
+          bundler-cache: true
 
       - name: Store gem cache
         uses: tespkg/actions-cache/save@v1
@@ -35,7 +37,7 @@ jobs:
           path: |
             Gemfile
             Gemfile.lock
-            ~/vendor/bundle
+            $PWD/vendor/bundle
 
       - name: Log in to registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
