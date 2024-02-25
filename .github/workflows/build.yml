@@ -19,9 +19,11 @@ jobs:
           path: |
             Gemfile
             Gemfile.lock
-            $PWD/vendor/bundle
+            ./bundle
 
       - name: Setup Ruby
+        env:
+          BUNDLE_PATH: ./bundle
         uses: ruby/setup-ruby@v1
 
       - name: Store gem cache
@@ -35,7 +37,7 @@ jobs:
           path: |
             Gemfile
             Gemfile.lock
-            $PWD/vendor/bundle
+            ./bundle
 
       - uses: whoan/docker-build-with-cache-action@v5
         with:

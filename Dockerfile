@@ -4,13 +4,10 @@
 ARG RUBY_VERSION=3.2.3
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
-# Rails app lives here
-WORKDIR /rails
-
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="$PWD/vendor/bundle" \
+    BUNDLE_PATH="./bundle" \
     BUNDLE_WITHOUT="development"
 
 # Install packages needed to build gems
@@ -31,8 +28,11 @@ RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc\
     postgresql-client-13 libpq-dev && \
     rm -rf /var/lib/apt/lists/*
 
+# Rails app lives here
+WORKDIR /rails
+
 # Copy application code
-COPY . .
+COPY . ./
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
