@@ -1,0 +1,24 @@
+name: Build docker image
+
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Restore yarn cache
+        id: cache
+        uses: whalemare/minio-cache
+        with:
+          endpoint: "minio.victorsmits.com" # optional, default s3.amazonaws.com
+          port: 9000 # minio port
+          accessKey:  ${{ secrets.MINIO_ACCESS_KEY }}
+          secretKey: ${{ secrets.MINIO_SECRET_KEY }}
+          bucket: "s3cache" # required
+          key: ${{env.GITHUB_REPOSITORY}}/${{env.GITHUB_REF_NAME}}
+          path: |
+            Gemfile
+            Gemfile.lock
+            ~/vendor/bundle

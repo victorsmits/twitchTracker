@@ -25,7 +25,7 @@ RUN apt-get update -q && apt-get upgrade -y && \
 FROM base as build
 
 # Copy application code
-COPY . .
+COPY .drone .
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
