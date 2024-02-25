@@ -25,6 +25,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+          self-hosted: true
 
       - name: Store gem cache
         uses: tespkg/actions-cache/save@v1
