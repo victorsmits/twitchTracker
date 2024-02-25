@@ -8,21 +8,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
+      - uses: whoan/docker-build-with-cache-action@v5
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: registry.victorsmits.com
-
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: registry.victorsmits.com/twitchtracker/app:latest
-          cache-from: type=registry,ref=registry.victorsmits.com/twitchtracker/app:buildcache
-          cache-to: type=registry,ref=registry.victorsmits.com/twitchtracker/app:buildcache,mode=max
+          image_tag: latest
+          image_name: twitchtracker/app
