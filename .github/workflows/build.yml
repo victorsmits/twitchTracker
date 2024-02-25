@@ -30,8 +30,7 @@ jobs:
       - name: Store gem cache
         uses: tespkg/actions-cache/save@v1
         with:
-          endpoint: "minio.victorsmits.com" # optional, default s3.amazonaws.com
-          port: 9000 # minio port
+          endpoint: "minio.victorsmits.com"
           accessKey: ${{ secrets.MINIO_ACCESS_KEY }}
           secretKey: ${{ secrets.MINIO_SECRET_KEY }}
           bucket: "s3cache" # required
