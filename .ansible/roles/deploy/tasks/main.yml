@@ -2,9 +2,6 @@
   debug:
     var: docker_images
 
-- debug:
-  msg: "{{ansible_env}}"
-
 - name: Set variable folder_deployment
   set_fact:
     folder_deployment: "{{ ansible_env.HOME }}/deployment/{{ folder }}"
@@ -23,6 +20,8 @@
     name: docker-compose
 
 - name: 'Log into private registry'
+  debug:
+    msg: "{{ansible_env}}"
   community.docker.docker_login:
     registry: "{{ lookup('env', 'REGISTRY_URL') }}"
     username: "{{ lookup('env', 'REGISTRY_USER') }}"
