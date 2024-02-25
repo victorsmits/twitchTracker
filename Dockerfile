@@ -10,7 +10,6 @@ WORKDIR /rails
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="./bundle" \
     BUNDLE_WITHOUT="development"
 
 # Install packages needed to build gems
