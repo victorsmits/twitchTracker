@@ -23,9 +23,6 @@ jobs:
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.2.3
-          bundler-cache: true
 
       - name: Store gem cache
         uses: tespkg/actions-cache/save@v1
@@ -40,17 +37,10 @@ jobs:
             Gemfile.lock
             $PWD/vendor/bundle
 
-      - name: Log in to registry
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+      - uses: whoan/docker-build-with-cache-action@v5
         with:
-          registry: registry.victorsmits.com
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: registry.victorsmits.com/twitchtracker/app:latest
+          registry: registry.victorsmits.com
+          image_tag: latest
+          image_name: twitchtracker/app
