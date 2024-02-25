@@ -20,5 +20,6 @@ jobs:
           options: |
             --inventory .ansible/production
             --user agent
+            --extra-vars "ansible_sudo_pass=${{ secrets.ANSIBLE_SUDO_PASSWORD }}"
             --verbose
           verbose: 4
