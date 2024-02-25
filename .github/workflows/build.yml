@@ -12,8 +12,8 @@ jobs:
         uses: tespkg/actions-cache/restore@v1
         with:
           endpoint: "minio.victorsmits.com" # optional, default s3.amazonaws.com
-          accessKey:  ${{ secrets.MINIO_ACCESS_KEY }}
-          secretKey: ${{ secrets.MINIO_SECRET_KEY }}
+          accessKey:  drone
+          secretKey: ieXUOaQJrrjJlzrhxI5KYbjffOqgvP3wBI0x79ml
           bucket: "s3cache" # required
           key: ${{ github.repository }}/${{ github.ref }}
           path: |
