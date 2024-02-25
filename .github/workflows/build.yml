@@ -8,16 +8,36 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Restore yarn cache
-        id: cache
-        uses: ProxyQB/minio-cache@v1.1.16
+      - name: Restore gem cache
+        id: cache_restore
+        uses: tespkg/actions-cache/restore@v1
         with:
           endpoint: "minio.victorsmits.com" # optional, default s3.amazonaws.com
           port: 9000 # minio port
           accessKey:  ${{ secrets.MINIO_ACCESS_KEY }}
           secretKey: ${{ secrets.MINIO_SECRET_KEY }}
           bucket: "s3cache" # required
-          key: ${{env.GITHUB_REPOSITORY}}/${{env.GITHUB_REF_NAME}}
+          key: ${{ github.repository }}/${{ github.ref }}
+          path: |
+            Gemfile
+            Gemfile.lock
+            ~/vendor/bundle
+
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby
+        with:
+          bundler-cache: true
+
+      - name: Store gem cache
+        id: cache_save
+        uses: tespkg/actions-cache/save@v1
+        with:
+          endpoint: "minio.victorsmits.com" # optional, default s3.amazonaws.com
+          port: 9000 # minio port
+          accessKey: ${{ secrets.MINIO_ACCESS_KEY }}
+          secretKey: ${{ secrets.MINIO_SECRET_KEY }}
+          bucket: "s3cache" # required
+          key: ${{ github.repository }}/${{ github.ref }}
           path: |
             Gemfile
             Gemfile.lock
