@@ -17,4 +17,4 @@ jobs:
           playbook: .ansible/deploy.yml
           inventory: .ansible/production.conf
           private_key: ${{secrets.SSH_PRIVATE_KEY}}
-          requirements: .ansible/requirement.yml
+          galaxy_file: .ansible/requirement.yml
