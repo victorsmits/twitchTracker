@@ -4,7 +4,7 @@
 
 - name: Debug env
   debug:
-   msg: "'{{ lookup('env', 'REGISTRY_URL') }}'
+   msg: "{{ lookup('env', 'REGISTRY_URL') }}"
 
 - name: Set variable folder_deployment
   set_fact:
