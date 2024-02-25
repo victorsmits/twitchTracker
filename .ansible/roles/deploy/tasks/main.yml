@@ -65,6 +65,13 @@
     dest: "{{ folder_deployment }}/docker-compose.yml"
   register: compose
 
+- name: Start docker compose
+  docker_compose:
+    state: present
+    project_src: "{{ folder_deployment }}"
+    remove_orphans: yes
+
+
 - name: migrate database
   community.docker.docker_container_exec:
     container: "{{ container }}"
