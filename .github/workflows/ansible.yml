@@ -14,7 +14,7 @@ jobs:
           secrets: ${{ toJSON(secrets) }}
           convert: lower
           exclude: DOCKER_*, ANSIBLE_*, MINIO_*, SSH_*
-      - run: echo ${{ steps.secrets_env.outputs.env }}
+      - run: echo ${{ steps.secrets_env.outputs.env }} > .env
       - name: copy .env to deploy folder
         run: cp .env ~/deployment/twitchtracker/.env
       - name: Run playbook
