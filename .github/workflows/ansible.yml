@@ -7,6 +7,14 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v3
+      - name: setup .env file
+        uses: oNaiPs/secrets-to-env-action@v1
+        with:
+          secrets: ${{ toJSON(secrets) }}
+          convert: lower
+          exclude: DOCKER_*, ANSIBLE_*, MINIO_*, SSH_*
+      - name: copy .env to deploy folder
+        run: cp .env ~/deployment/twitchtracker/.env
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         env:
