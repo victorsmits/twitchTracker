@@ -8,7 +8,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v3
       - name: setup .env file
-        uses: victorsmits/secrets-to-env-file@1.0.3
+        uses: victorsmits/secrets-to-env-file@1.0.4
         id: secrets_env
         with:
           secrets: ${{ toJSON(secrets) }}
