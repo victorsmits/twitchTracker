@@ -8,12 +8,13 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v3
       - name: setup .env file
-        uses: oNaiPs/secrets-to-env-action@v1
+        uses: victorsmits/secrets-to-env-file@v1
+        id: secrets_env
         with:
           secrets: ${{ toJSON(secrets) }}
           convert: lower
           exclude: DOCKER_*, ANSIBLE_*, MINIO_*, SSH_*
-      - run: ls -la
+      - run: echo ${{ steps.secrets_env.outputs.env }}
       - name: copy .env to deploy folder
         run: cp .env ~/deployment/twitchtracker/.env
       - name: Run playbook
