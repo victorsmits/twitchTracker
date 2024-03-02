@@ -85,5 +85,3 @@ test:
 production:
   <<: *default
   database: twitch_tracker_production
-  username: twitch_tracker
-  password: <%= ENV["TWITCH_TRACKER_DATABASE_PASSWORD"] %>

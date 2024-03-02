@@ -35,6 +35,8 @@ services:
       SECRET_KEY_BASE: a075729f770dbb65262865954df73ab0afefe58ce5e993447d246184813d20cc02d19f35490598386699c5feab35f3fcbc9d3aced8cbe77e2faba8543ac20bd6
       pg_host: tracker_pg
     command: bundle exec rails s -p 3666 -b 0.0.0.0
+    volumes:
+      - .env:/rails/.env
     networks:
       - tracker_network
     depends_on:
