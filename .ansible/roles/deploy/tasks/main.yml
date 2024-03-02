@@ -66,7 +66,7 @@
   register: compose
 
 - name: Start docker compose
-  docker_compose:
+  community.docker.docker_compose:
     state: present
     project_src: "{{ folder_deployment }}"
     remove_orphans: yes
