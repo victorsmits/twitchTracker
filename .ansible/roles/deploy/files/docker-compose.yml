@@ -48,6 +48,8 @@ services:
   tracker_sidekiq:
     image: registry.victorsmits.com/twitchtracker/app:latest
     container_name: tracker_sidekiq
+    volumes:
+      - .env:/rails/.env
     networks:
       - tracker_network
     environment:

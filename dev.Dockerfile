@@ -43,7 +43,4 @@ COPY Gemfile Gemfile.lock ./
 
 RUN bundle install --jobs=3 --retry=3
 
-RUN set -e
-RUN echo "Running environment: $RAILS_ENV"
-
-CMD ["bundle exec rails s -p 3666 -b 0.0.0.0"]
+ENTRYPOINT ["./dev-entrypoint.sh"]
