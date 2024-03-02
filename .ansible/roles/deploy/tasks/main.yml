@@ -77,7 +77,7 @@
 - name: migrate database
   community.docker.docker_container_exec:
     container: "{{ container }}"
-    command: rails db:migrate
+    command: bundle exec rails db:migrate
 
 - name: Prune old artifacts images
   community.docker.docker_prune:
