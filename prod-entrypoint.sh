@@ -8,7 +8,7 @@ echo "Running environment: $RAILS_ENV"
  bundle check || bundle install
 
 # Remove pre-existing puma/passenger server.pid
-[ -f /app/tmp/pids/server.pid ] && rm -f /app/tmp/pids/server.pid
+[ -f /rails/tmp/pids/server.pid ] && rm -f /rails/tmp/pids/server.pid
 
 # Run given arguments (rails console, rails server ...)
 bundle exec ${@}
