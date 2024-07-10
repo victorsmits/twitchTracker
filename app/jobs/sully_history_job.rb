@@ -28,7 +28,7 @@ class SullyHistoryJob
 
   def get_all_streams(channel_id)
     all_streams = []
-    page_number= 0
+    page_number = 0
     loop do
       data = get_streams(channel_id, 365, page_number, 100)
       break if data.empty?
@@ -40,21 +40,38 @@ class SullyHistoryJob
     all_streams
   end
 
+  def twitch_client
+    TwitchClient.new.client
+  end
+
   def process_user(user_name, id)
     temp_user = user(user_name)
     return temp_user if temp_user.present?
     User.create!(twitch_name: user_name, twitch_id: 89284114, sully_streamer_id: id)
   end
 
+  def process_game(name)
+    game = twitch_client.get_games({ name: name }).data
+    Game.find_or_create_by!({ twitch_id: game.first&.id.to_i, name: name }) unless game.first.nil?
+  end
+
   def process_streams(user, streams)
     streams.each do |data|
-      stream = Stream.find_by(
+      stream = Stream.find_or_create_by!(
         user: user,
         twitch_stream_id: data["streamId"],
         max_viewer_count: data["maxviewers"],
         started_at: data["starttime"],
         ended_at: data["endtime"]
-      ).first_or_create
+      )
+      games = process_played_games data["gamesplayed"]
+      games.each do |game|
+        log = StreamLog.find_or_create_by!({
+                                             stream: stream,
+                                             game: game
+                                           })
+      end
+
     end
   end
 
@@ -64,11 +81,10 @@ class SullyHistoryJob
 
   #"Grand Theft Auto V|Grand_Theft_Auto_V|https://static-cdn.jtvnw.net/ttv-boxart/32982_IGDB-136x190.jpg?imenable=1&impolicy=user-profile-picture&imwidth=100"
 
-  def games(gamesplayed)
+  def process_played_games(gamesplayed)
     games = gamesplayed.split('|').each_slice(3).to_a
     games.map do |game|
-      name = game[1]
-      Game.where(name: name).first_or_create
+      process_game game[0]
     end
   end
 
