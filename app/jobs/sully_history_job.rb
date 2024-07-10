@@ -48,20 +48,28 @@ class SullyHistoryJob
 
   def process_streams(user, streams)
     streams.each do |data|
-      unless stream_present? data["streamId"]
-        Stream.create!(
-          user: user,
-          twitch_stream_id: data["streamId"],
-          max_viewer_count: data["maxviewers"],
-          started_at: data["starttime"],
-          ended_at: data["endtime"]
-        )
-      end
+      stream = Stream.find_by(
+        user: user,
+        twitch_stream_id: data["streamId"],
+        max_viewer_count: data["maxviewers"],
+        started_at: data["starttime"],
+        ended_at: data["endtime"]
+      ).first_or_create
     end
   end
 
   def user(twitch_name)
     User.find_by(twitch_name: twitch_name)
+  end
+
+  #"Grand Theft Auto V|Grand_Theft_Auto_V|https://static-cdn.jtvnw.net/ttv-boxart/32982_IGDB-136x190.jpg?imenable=1&impolicy=user-profile-picture&imwidth=100"
+
+  def games(gamesplayed)
+    games = gamesplayed.split('|').each_slice(3).to_a
+    games.map do |game|
+      name = game[1]
+      Game.where(name: name).first_or_create
+    end
   end
 
   def stream_present?(stream_id)
