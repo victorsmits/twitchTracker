@@ -61,7 +61,6 @@
     <orderEntry type="library" scope="PROVIDED" name="i18n (v1.14.1, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="io-console (v0.7.2, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="irb (v1.11.2, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="logger (v1.5.3, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="loofah (v2.22.0, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mail (v2.8.1, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="marcel (v1.0.2, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
@@ -107,7 +106,6 @@
     <orderEntry type="library" scope="PROVIDED" name="tilt (v2.3.0, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="timeout (v0.4.1, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tzinfo (v2.0.6, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="uri (v0.12.2, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="webrick (v1.8.1, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="websocket-driver (v0.7.6, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="websocket-extensions (v0.1.5, Remote: ruby-3.2.3 (-p157) [gem]" level="application" />

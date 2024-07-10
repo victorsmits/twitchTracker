@@ -65,6 +65,16 @@ services:
     stdin_open: true
     tty: true
 
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    volumes:
+      - .metabase-data:/metabase-data
+    ports:
+      - 9003:3000
+    networks:
+      - tracker_network
+
 volumes:
   tracker_pg_data:
   tracker_redis_data:
