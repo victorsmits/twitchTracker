@@ -19,10 +19,7 @@ module TwitchTracker
 
     config.middleware.use config.session_store, config.session_options
 
-    config.autoloader = :zeitwerk
-    config.autoload_paths += %W[#{config.root}/lib]
-    config.autoload_paths += Dir["#{config.root}/lib/**/"]
-    config.eager_load_paths << "#{Rails.root}/lib/twitch"
+    config.eager_load_paths << Rails.root.join('lib', 'twitch')
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

@@ -10,15 +10,23 @@ class SullyHistoryJob
 
   REQUEST_PARAMS = { 'user-agent' => USER_AGENT }
 
-  def perform(user)
-    id = sully_streamer_id user
+  def perform(user_name)
+    id = sully_streamer_id user_name
     return unless id
-    streams = get_all_streams id
-    user = process_user(user, id)
-    process_streams(user, streams)
+    @streams = get_all_streams id
+    @twitch_user = twitch_client.get_users({ login: user_name }).data.first
+    @user = process_user(user_name, id)
+    process_streams
+    process_videos twitch_user.videos
   end
 
   private
+
+  attr_reader :user, :streams, :twitch_user
+
+  def twitch_client
+    @twitch_client = TwitchClient.new.client
+  end
 
   def get_streams(channel_id, duration = 365, page_number = 0, page_size = 100)
     url = "https://sullygnome.com/api/tables/channeltables/streams/#{duration}/#{channel_id}/%20/#{page_number}/1/desc/#{page_number * page_size}/#{page_size}"
@@ -40,14 +48,8 @@ class SullyHistoryJob
     all_streams
   end
 
-  def twitch_client
-    TwitchClient.new.client
-  end
-
   def process_user(user_name, id)
-    temp_user = user(user_name)
-    return temp_user if temp_user.present?
-    User.create!(twitch_name: user_name, twitch_id: 89284114, sully_streamer_id: id)
+    User.find_or_create_by!(twitch_name: user_name, twitch_id: twitch_user.id, sully_streamer_id: id)
   end
 
   def process_game(name)
@@ -55,41 +57,31 @@ class SullyHistoryJob
     Game.find_or_create_by!({ twitch_id: game.first&.id.to_i, name: name }) unless game.first.nil?
   end
 
-  def process_streams(user, streams)
+  def process_streams
     streams.each do |data|
       stream = Stream.find_or_create_by!(
         user: user,
-        twitch_stream_id: data["streamId"],
-        max_viewer_count: data["maxviewers"],
+        twitch_stream_id: data["streamId"].to_i,
+        max_viewer_count: data["maxviewers"].to_i,
         started_at: data["starttime"],
         ended_at: data["endtime"]
       )
       games = process_played_games data["gamesplayed"]
       games.each do |game|
-        log = StreamLog.find_or_create_by!({
-                                             stream: stream,
-                                             game: game
-                                           })
+        StreamLog.find_or_create_by!({
+                                       stream: stream,
+                                       game: game
+                                     })
       end
 
     end
   end
-
-  def user(twitch_name)
-    User.find_by(twitch_name: twitch_name)
-  end
-
-  #"Grand Theft Auto V|Grand_Theft_Auto_V|https://static-cdn.jtvnw.net/ttv-boxart/32982_IGDB-136x190.jpg?imenable=1&impolicy=user-profile-picture&imwidth=100"
 
   def process_played_games(gamesplayed)
     games = gamesplayed.split('|').each_slice(3).to_a
     games.map do |game|
       process_game game[0]
     end
-  end
-
-  def stream_present?(stream_id)
-    Stream.find_by(twitch_stream_id: stream_id).present?
   end
 
   def sully_streamer_id(user)
@@ -100,4 +92,18 @@ class SullyHistoryJob
     page_info['id'] if page_info
   end
 
+  def process_videos(videos)
+    videos.each do |video|
+      StreamVideo.find_or_create_by!({
+                                       user: user,
+                                       stream_id: video.stream_id,
+                                       vod_id: video.id,
+                                       title: video.title,
+                                       published_at: video.published_at,
+                                       thumbnail_url: video.thumbnail_url,
+                                       duration: video.duration,
+                                       view_count: video.view_count,
+                                     })
+    end
+  end
 end

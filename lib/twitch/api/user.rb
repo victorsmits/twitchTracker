@@ -1,8 +1,16 @@
 # frozen_string_literal: true
+require 'faraday'
+require 'faraday/parse_dates'
+require 'faraday/retry'
+
+require_relative 'response'
+require_relative 'api_error'
+
+require_relative 'video'
 
 module Twitch
   # Data object for Twitch users
-  class User
+  class User < Api
     # ID of the user.
     attr_reader :id
     # Unformatted (lowercase) username of the user.
@@ -27,10 +35,26 @@ module Twitch
     # The UTC date and time that the user’s account was created. The timestamp is in RFC3339 format.
     attr_reader :created_at
 
+
     def initialize(attributes = {})
       attributes.each do |key, value|
         instance_variable_set :"@#{key}", value
       end
+    end
+
+    def videos
+      videos = []
+      cursor = nil
+      loop do
+        data = initialize_response Video, get('videos', { first: 100, user_id: id, after: cursor })
+        break if data.data.empty?
+
+        videos.concat(data.data)
+
+        cursor = data.pagination["cursor"]
+        break
+      end
+      videos
     end
   end
 end
