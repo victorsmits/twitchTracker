@@ -19,7 +19,7 @@ gem "puma", ">= 5.0"
 # Use Redis adapter to run Action Cable in production
 gem "redis", ">= 4.0.1"
 gem 'twitch_oauth2'
-# gem 'twitch-api', path: "lib/twitch-api"
+# gem 'twitch-api'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -61,3 +61,7 @@ gem 'awesome_print', :require => 'ap'
 gem "httparty", "~> 0.21.0"
 
 gem "dotenv", "~> 3.1"
+
+gem "faraday"
+gem "faraday-parse_dates"
+gem "faraday-retry"

@@ -102,6 +102,8 @@ GEM
       net-http
     faraday-parse_dates (0.1.1)
       faraday (~> 2.0)
+    faraday-retry (2.2.1)
+      faraday (~> 2.0)
     figaro (1.2.0)
       thor (>= 0.14.0, < 2)
     fugit (1.9.0)
@@ -267,6 +269,9 @@ DEPENDENCIES
   bootsnap
   debug
   dotenv (~> 3.1)
+  faraday
+  faraday-parse_dates
+  faraday-retry
   figaro
   httparty (~> 0.21.0)
   pg (~> 1.1)

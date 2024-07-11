@@ -1,5 +1,5 @@
 require 'twitch_oauth2'
-require 'twitch-api'
+require 'twitch/twitch'
 
 class TwitchClient
 
