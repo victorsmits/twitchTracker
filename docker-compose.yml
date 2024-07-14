@@ -4,6 +4,7 @@ services:
   tracker_pg:
     image: postgres:alpine
     container_name: tracker_pg
+    command: -c 'max_connections=500'
     restart: always
     ports:
       - "5500:5432"
@@ -61,11 +62,11 @@ services:
     environment:
       RAILS_ENV: development
       redis_url: redis://tracker_redis:6379
-      db_host: tracker_pg
+      pg_host: tracker_pg
     volumes:
       - .:/app
       - bundler_gems:/usr/local/bundle
-    command: sidekiq -c 2
+    command: sidekiq -c 4
     depends_on:
       - tracker_pg
       - tracker_redis

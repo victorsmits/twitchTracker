@@ -17,7 +17,6 @@ class SullyHistoryJob
     @twitch_user = twitch_client.get_users({ login: user_name }).data.first
     @user = process_user(user_name, id)
     process_streams
-    process_videos twitch_user.videos
   end
 
   private
@@ -53,8 +52,7 @@ class SullyHistoryJob
   end
 
   def process_game(name)
-    game = twitch_client.get_games({ name: name }).data
-    debugger if game.first.nil?
+    game = twitch_client.get_games({ name: name.gsub(/&amp; /, "") }).data
     Game.find_or_create_by!({ twitch_id: game.first&.id.to_i, name: name }) unless game.first.nil?
   end
 
@@ -69,10 +67,7 @@ class SullyHistoryJob
       )
       games = process_played_games data["gamesplayed"]
       games.each do |game|
-        StreamLog.find_or_create_by!({
-                                       stream: stream,
-                                       game: game
-                                     })
+        StreamLog.find_or_create_by!({ stream: stream, game: game }) if game and stream
       end
 
     end
@@ -81,8 +76,7 @@ class SullyHistoryJob
   def process_played_games(gamesplayed)
     games = gamesplayed.split('|').each_slice(3).to_a
     games.map do |game|
-      g = process_game game[0]
-      g unless g.nil?
+      process_game game[0]
     end
   end
 
