@@ -3,7 +3,7 @@
 # Article for redis connection pool
 # https://tejasbubane.github.io/posts/2020-04-22-redis-connection-pool-in-rails/
 
-pool_size = ENV.fetch('redis_connection_pool_size', 10)
+pool_size = ENV.fetch('redis_connection_pool_size', 20)
 
 REDIS = ConnectionPool.new(size: pool_size) do
   Redis.new(
