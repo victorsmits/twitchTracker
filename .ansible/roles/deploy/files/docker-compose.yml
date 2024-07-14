@@ -59,7 +59,7 @@ services:
       redis_url: redis://tracker_redis:6379
       pg_host: tracker_pg
       SECRET_KEY_BASE: a075729f770dbb65262865954df73ab0afefe58ce5e993447d246184813d20cc02d19f35490598386699c5feab35f3fcbc9d3aced8cbe77e2faba8543ac20bd6
-    command: sidekiq -c 6
+    command: sidekiq -c 10
     depends_on:
       - tracker_pg
       - tracker_redis
