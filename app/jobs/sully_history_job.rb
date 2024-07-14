@@ -85,6 +85,7 @@ class SullyHistoryJob
     raw_page_info = fetcher.fetch_value('PageInfo')
     return unless raw_page_info
     page_info = JSON.parse(raw_page_info)
+    return unless page_info
     page_info['id'] if page_info
   end
 
