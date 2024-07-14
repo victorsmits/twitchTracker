@@ -10,10 +10,10 @@ class SullyHistoryJob
 
   REQUEST_PARAMS = { 'user-agent' => USER_AGENT }
 
-  def perform(user_name)
+  def perform(user_name, duration = 395)
     id = sully_streamer_id user_name
     return unless id
-    @streams = get_all_streams id
+    @streams = get_all_streams(id, duration)
     @twitch_user = twitch_client.get_users({ login: user_name }).data.first
     return unless @twitch_user
     @user = process_user(user_name, id)
@@ -34,11 +34,11 @@ class SullyHistoryJob
     JSON.parse(response.body)['data']
   end
 
-  def get_all_streams(channel_id)
+  def get_all_streams(channel_id, duration)
     all_streams = []
     page_number = 0
     loop do
-      data = get_streams(channel_id, 365, page_number, 100)
+      data = get_streams(channel_id, duration, page_number, 100)
       break if data.empty?
 
       all_streams.concat(data)
