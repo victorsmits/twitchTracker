@@ -15,6 +15,7 @@ class SullyHistoryJob
     return unless id
     @streams = get_all_streams id
     @twitch_user = twitch_client.get_users({ login: user_name }).data.first
+    return unless @twitch_user
     @user = process_user(user_name, id)
     process_streams
   end
