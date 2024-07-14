@@ -54,6 +54,7 @@ class SullyHistoryJob
 
   def process_game(name)
     game = twitch_client.get_games({ name: name }).data
+    debugger if game.first.nil?
     Game.find_or_create_by!({ twitch_id: game.first&.id.to_i, name: name }) unless game.first.nil?
   end
 
@@ -80,7 +81,8 @@ class SullyHistoryJob
   def process_played_games(gamesplayed)
     games = gamesplayed.split('|').each_slice(3).to_a
     games.map do |game|
-      process_game game[0]
+      g = process_game game[0]
+      g unless g.nil?
     end
   end
 

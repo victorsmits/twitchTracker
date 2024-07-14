@@ -4,13 +4,14 @@ require 'faraday/parse_dates'
 require 'faraday/retry'
 
 require_relative 'response'
+require_relative 'request'
 require_relative 'api_error'
 
 require_relative 'video'
 
 module Twitch
   # Data object for Twitch users
-  class User < Api
+  class User < Request
     # ID of the user.
     attr_reader :id
     # Unformatted (lowercase) username of the user.

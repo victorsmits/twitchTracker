@@ -6,9 +6,9 @@ require 'faraday/retry'
 require 'twitch_oauth2'
 
 require_relative 'response'
-require_relative 'api'
-
 require_relative 'api_error'
+require_relative 'request'
+
 require_relative 'bits_leader'
 require_relative 'category'
 require_relative 'channel'
@@ -35,7 +35,7 @@ require_relative 'video'
 
 module Twitch
   # Core class for requests
-  class Client < Api
+  class Client < Request
 
     attr_reader :tokens
 

@@ -5,18 +5,14 @@ require 'faraday/parse_dates'
 require 'faraday/retry'
 require 'twitch_oauth2'
 
-require_relative 'response'
-require_relative 'api'
-require_relative 'api_error'
-
 
 module Twitch
   # Core class for requests
-  class Api
+  class Request
     # Base connection to Helix API.
     CONNECTION = Faraday.new(
       'https://api.twitch.tv/helix', {
-      headers: { 'User-Agent': "twitch-api ruby client #{Twitch::VERSION}" }
+      headers: { 'User-Agent': "twitch-tracker" }
     }
     ) do |faraday|
       faraday.request :retry,

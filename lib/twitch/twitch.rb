@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+require_relative 'client'
+module Twitch
+  class Twitch
 
-require_relative 'api/version'
-require_relative 'api/client'
+  end
+end
