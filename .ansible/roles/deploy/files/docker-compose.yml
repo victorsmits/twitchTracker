@@ -4,6 +4,7 @@ services:
   tracker_pg:
     image: postgres:alpine
     container_name: tracker_pg
+    command: -c 'max_connections=500'
     restart: always
     ports:
       - "5500:5432"
